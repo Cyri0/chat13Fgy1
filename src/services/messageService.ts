@@ -1,8 +1,8 @@
 import type { MessageType } from "../components/Message"
 
-export const BASE_URL = "https://4kqq873p-3000.euw.devtunnels.ms/"
+export const BASE_URL = import.meta.env.VITE_BASE_URL
 
-export async function getMessages(){
+export async function getMessages(){   
     try {
         const res = await fetch(BASE_URL + "messages")
         const messages: MessageType[] = await res.json()
@@ -26,4 +26,13 @@ export async function sendPostMessage(username: string, message: string){
         console.error(error);
         return null
     }
+}
+
+export function startMessageStream(){
+    const source = new EventSource(BASE_URL + "stream")
+    
+    source.onerror = (error) => {console.log(error);
+    }
+
+    return source
 }

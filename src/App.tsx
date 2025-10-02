@@ -1,13 +1,26 @@
 import { useEffect, useState } from "react"
 import Sender from "./components/Sender"
 import type { MessageType } from "./components/Message"
-import { getMessages } from "./services/messageService"
+import { getMessages, startMessageStream } from "./services/messageService"
 import Message from "./components/Message"
 
 const App = () => {
   const [messages, setMessages] = useState<MessageType[]>([])
   
   useEffect(()=>{ getMessages().then(response => setMessages(response)) },[])
+  
+  useEffect(()=>{
+    const source = startMessageStream()
+
+    source.onmessage = (event) => {
+      const newMessage:MessageType = JSON.parse(event.data)
+      console.log(newMessage);
+      
+      setMessages(prev => [...prev,newMessage])
+    }
+
+    return () => source.close()
+  },[])
   
   return (
     <div>
