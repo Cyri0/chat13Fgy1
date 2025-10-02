@@ -5,8 +5,10 @@ const Sender = () => {
   const [message, setMessage] = useState("")
   
   const sendMessage = () => {
-    if(message.length > 0)
-        sendPostMessage("Tomi bácsi", message)
+    if(message.length > 0){
+      sendPostMessage("Tomi bácsi", message)
+      setMessage("")
+    }
   }
 
   return (

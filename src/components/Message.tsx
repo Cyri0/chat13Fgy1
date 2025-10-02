@@ -6,18 +6,18 @@ export type MessageType = {
 }
 
 const Message = (props: MessageType) => {
-  const {message,timestamp,username} = props
+  const {id,message,timestamp,username} = props
   const time = new Date(timestamp)
   return (
-    <div>
+    <div className="message">
         <div className="top">
-            <span>{username}</span>
+            <span>{username}<br/>#{id}</span>
             <span>
                 {time.toLocaleDateString()}<br/>
                 {time.toLocaleTimeString()}
             </span>
         </div>
-        <p>{message}</p>
+        <div dangerouslySetInnerHTML={{__html: message}}></div>
     </div>
   )
 }

@@ -31,8 +31,7 @@ export async function sendPostMessage(username: string, message: string){
 export function startMessageStream(){
     const source = new EventSource(BASE_URL + "stream")
     
-    source.onerror = (error) => {console.log(error);
-    }
+    source.onerror = (error) => { console.error(error); }
 
     return source
 }
